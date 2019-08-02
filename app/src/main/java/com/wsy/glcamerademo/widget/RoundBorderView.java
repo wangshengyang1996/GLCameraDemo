@@ -63,7 +63,7 @@ public class RoundBorderView extends View {
     }
 
     public void turnRound() {
-        invalidateOutline();
+        invalidate();
     }
 
     public void setRadius(int radius) {
