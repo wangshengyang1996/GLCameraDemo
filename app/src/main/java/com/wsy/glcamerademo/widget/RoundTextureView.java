@@ -14,9 +14,6 @@ public class RoundTextureView extends TextureView {
 
     public RoundTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public void turnRound() {
         setOutlineProvider(new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {
@@ -25,6 +22,10 @@ public class RoundTextureView extends TextureView {
             }
         });
         setClipToOutline(true);
+    }
+
+    public void turnRound() {
+        invalidateOutline();
     }
 
     public void setRadius(int radius) {

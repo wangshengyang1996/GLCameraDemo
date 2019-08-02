@@ -55,13 +55,7 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
         //设置Renderer到GLSurfaceView
         setRenderer(new YUVRenderer());
         // 只有在绘制数据改变时才绘制view
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-    }
-
-    /**
-     * 根据{@link #radius}设置圆角
-     */
-    public void turnRound() {
+        setRenderMode(RENDERMODE_WHEN_DIRTY);
         setOutlineProvider(new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {
@@ -70,6 +64,10 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
             }
         });
         setClipToOutline(true);
+    }
+
+    public void turnRound() {
+        invalidateOutline();
     }
 
     public int getRadius() {
@@ -156,24 +154,25 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     /**
      * 创建OpenGL Program并
      */
-    private void changeFilterShader() {
+    private void createGLProgram() {
         int programHandleMain = GLUtil.createShaderProgram();
         if (programHandleMain != -1) {
+            // 使用着色器程序
+            GLES20.glUseProgram(programHandleMain);
             // 获取顶点着色器变量
             int glPosition = GLES20.glGetAttribLocation(programHandleMain, "attr_position");
             int textureCoord = GLES20.glGetAttribLocation(programHandleMain, "attr_tc");
 
-            // 获取片元着色器变量
+            // 获取片段着色器变量
             int ySampler = GLES20.glGetUniformLocation(programHandleMain, "ySampler");
             int uSampler = GLES20.glGetUniformLocation(programHandleMain, "uSampler");
             int vSampler = GLES20.glGetUniformLocation(programHandleMain, "vSampler");
 
-            // 使用滤镜着色器程序
-            GLES20.glUseProgram(programHandleMain);
             //给变量赋值
             /**
              * GLES20.GL_TEXTURE0 和 ySampler 绑定
              * GLES20.GL_TEXTURE1 和 uSampler 绑定
+             * GLES20.GL_TEXTURE2 和 vSampler 绑定
              *
              * 也就是说 glUniform1i的第二个参数代表图层序号
              */
@@ -197,7 +196,7 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     public class YUVRenderer implements Renderer {
         private void initRenderer() {
             rendererReady = false;
-            changeFilterShader();
+            createGLProgram();
 
             //启用纹理
             GLES20.glEnable(GLES20.GL_TEXTURE_2D);
@@ -220,9 +219,37 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
             GLES20.glGenTextures(1, textureId, 0);
             //绑定纹理
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId[0]);
-            //设置纹理属性
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+            /**
+             * {@link GLES20#GL_TEXTURE_WRAP_S}代表左右方向的纹理环绕模式
+             * {@link GLES20#GL_TEXTURE_WRAP_T}代表上下方向的纹理环绕模式
+             *
+             *  {@link GLES20#GL_REPEAT}：重复
+             *  {@link GLES20#GL_MIRRORED_REPEAT}：镜像重复
+             *  {@link GLES20#GL_CLAMP_TO_EDGE}：忽略边框截取
+             *
+             * 例如我们使用{@link GLES20#GL_REPEAT}：
+             *
+             *             squareVertices           coordVertices
+             *             -1.0f, -1.0f,            1.0f, 1.0f,
+             *             1.0f, -1.0f,             1.0f, 0.0f,         ->          和textureView预览相同
+             *             -1.0f, 1.0f,             0.0f, 1.0f,
+             *             1.0f, 1.0f               0.0f, 0.0f
+             *
+             *             squareVertices           coordVertices
+             *             -1.0f, -1.0f,            2.0f, 2.0f,
+             *             1.0f, -1.0f,             2.0f, 0.0f,         ->          和textureView预览相比，分割成了4 块相同的预览（左下，右下，左上，右上）
+             *             -1.0f, 1.0f,             0.0f, 2.0f,
+             *             1.0f, 1.0f               0.0f, 0.0f
+             */
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_REPEAT);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_REPEAT);
+            /**
+             * {@link GLES20#GL_TEXTURE_MIN_FILTER}代表所显示的纹理比加载进来的纹理小时的情况
+             * {@link GLES20#GL_TEXTURE_MAG_FILTER}代表所显示的纹理比加载进来的纹理大时的情况
+             *
+             *  {@link GLES20#GL_NEAREST}：使用纹理中坐标最接近的一个像素的颜色作为需要绘制的像素颜色
+             *  {@link GLES20#GL_LINEAR}：使用纹理中坐标最接近的若干个颜色，通过加权平均算法得到需要绘制的像素颜色
+             */
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, format, width, height, 0, format, GLES20.GL_UNSIGNED_BYTE, null);

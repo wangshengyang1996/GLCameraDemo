@@ -28,7 +28,6 @@ class GLUtil {
                     "    uniform sampler2D ySampler;\n" +
                     "    uniform sampler2D uSampler;\n" +
                     "    uniform sampler2D vSampler;            \n" +
-//                     "    const mat3 convertMat = mat3( 1.0, 1.0, 1.0, 0.0, 0.39465, 2.03211, 1.13983, -0.58060, 0.0 );\n" +
                     "    const mat3 convertMat = mat3( 1.0, 1.0, 1.0, -0.001, -0.3441, 1.772, 1.402, -0.7141, -0.58060 );\n" +
                     "    void main()\n" +
                     "    {\n" +
@@ -38,11 +37,14 @@ class GLUtil {
                     "        yuv.z = texture2D(vSampler, tc).r - 0.5;\n" +
                     "        gl_FragColor = vec4(convertMat * yuv, 1.0);\n" +
                     "    }";
+
     //SQUARE_VERTICES每2个值作为一个顶点
     static final int COUNT_PER_SQUARE_VERTICE = 2;
     //COORD_VERTICES每2个值作为一个顶点
     static final int COUNT_PER_COORD_VERTICES = 2;
-
+    /**
+     * 显示的顶点
+     */
     static final float[] SQUARE_VERTICES = {
             -1.0f, -1.0f,
             1.0f, -1.0f,
@@ -204,9 +206,9 @@ class GLUtil {
         // 检查链接状态
         IntBuffer linked = IntBuffer.allocate(1);
         GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linked);
-        if (linked.get(0) == 0)
+        if (linked.get(0) == 0) {
             return -1;
-        Log.i(TAG, "createShaderProgram: " + mProgram);
+        }
         return mProgram;
     }
 
@@ -220,7 +222,7 @@ class GLUtil {
     private static int loadShader(int type, String shaderCode) {
         //创建空的shader
         int shader = GLES20.glCreateShader(type);
-        //shader和shader源码绑定
+        //加载shader代码
         GLES20.glShaderSource(shader, shaderCode);
         //编译shader
         GLES20.glCompileShader(shader);

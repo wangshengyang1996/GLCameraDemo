@@ -75,7 +75,6 @@ public class GLCameraActivity extends BaseActivity implements ViewTreeObserver.O
                 .cameraListener(this)
                 .specificCameraId(CAMERA_ID)
                 .previewOn(textureView)
-                .previewSize(new Point(1920,1080))
                 .previewViewSize(new Point(roundCameraGLSurfaceView.getLayoutParams().width, roundCameraGLSurfaceView.getLayoutParams().height))
                 .rotation(getWindowManager().getDefaultDisplay().getRotation())
                 .build();

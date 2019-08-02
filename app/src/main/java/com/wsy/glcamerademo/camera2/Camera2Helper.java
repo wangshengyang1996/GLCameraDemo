@@ -279,9 +279,6 @@ public class Camera2Helper {
             }
         });
         sizes = Arrays.asList(tempSizes);
-        for (Size size : sizes) {
-            Log.i(TAG, "getBestSupportedSize: " + size.getWidth() + "x" + size.getHeight());
-        }
         Size bestSize = sizes.get(0);
         float previewViewRatio;
         if (previewViewSize != null) {

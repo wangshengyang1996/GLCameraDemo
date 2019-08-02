@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 
 public class RoundBorderView extends View {
     private Paint paint;
+    private int radius = 0;
 
 
     public RoundBorderView(Context context) {
@@ -26,6 +27,14 @@ public class RoundBorderView extends View {
 
     public RoundBorderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                Rect rect = new Rect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+                outline.setRoundRect(rect, radius);
+            }
+        });
+        setClipToOutline(true);
     }
 
     @Override
@@ -40,7 +49,6 @@ public class RoundBorderView extends View {
             paint.setShader(sweepGradient);
         }
         drawBorder(canvas, 6);
-        invalidate();
     }
 
 
@@ -54,17 +62,8 @@ public class RoundBorderView extends View {
         canvas.drawPath(drawPath, paint);
     }
 
-    private int radius = 0;
-
     public void turnRound() {
-        setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                Rect rect = new Rect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-                outline.setRoundRect(rect, radius);
-            }
-        });
-        setClipToOutline(true);
+        invalidateOutline();
     }
 
     public void setRadius(int radius) {
