@@ -27,7 +27,7 @@ class GLUtil {
             "    varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
                     "    uniform sampler2D uSampler;\n" +
-                    "    uniform sampler2D vSampler;            \n" +
+                    "    uniform sampler2D vSampler;\n" +
                     "    const mat3 convertMat = mat3( 1.0, 1.0, 1.0, -0.001, -0.3441, 1.772, 1.402, -0.7141, -0.58060 );\n" +
                     "    void main()\n" +
                     "    {\n" +
