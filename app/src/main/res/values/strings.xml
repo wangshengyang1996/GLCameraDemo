@@ -3,4 +3,5 @@
     <string name="camera_activity">使用Camera API</string>
     <string name="camera2_activity">使用Camera2 API</string>
     <string name="camera_opengl_activity"><![CDATA[使用Camera&OpenGL]]></string>
+    <string name="shelter_from_parent_camera_activity">使用Camera API + ViewGroup</string>
 </resources>

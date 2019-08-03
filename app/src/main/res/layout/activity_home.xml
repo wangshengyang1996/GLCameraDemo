@@ -18,6 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:onClick="usingCameraWithShelter"
+        android:text="@string/shelter_from_parent_camera_activity" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:onClick="usingCamera2"
         android:text="@string/camera2_activity" />
 

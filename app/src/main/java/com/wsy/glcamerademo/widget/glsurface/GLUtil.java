@@ -28,11 +28,11 @@ class GLUtil {
                     "    uniform sampler2D ySampler;\n" +
                     "    uniform sampler2D uSampler;\n" +
                     "    uniform sampler2D vSampler;\n" +
-                    "    const mat3 convertMat = mat3( 1.0, 1.0, 1.0, -0.001, -0.3441, 1.772, 1.402, -0.7141, -0.58060 );\n" +
+                    "    const mat3 convertMat = mat3(1.0, 1.0, 1.0, 0, -0.344, 1.77, 1.403, -0.714,0);\n" +
                     "    void main()\n" +
                     "    {\n" +
                     "        vec3 yuv;\n" +
-                    "        yuv.x = texture2D(ySampler, tc).r - 0.0625;\n" +
+                    "        yuv.x = texture2D(ySampler, tc).r;\n" +
                     "        yuv.y = texture2D(uSampler, tc).r - 0.5;\n" +
                     "        yuv.z = texture2D(vSampler, tc).r - 0.5;\n" +
                     "        gl_FragColor = vec4(convertMat * yuv, 1.0);\n" +

@@ -29,6 +29,13 @@ public class HomeActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, CAMERA_PERMISSION, REQUEST_CODE_USING_CAMERA);
         }
     }
+    public void usingCameraWithShelter(View view) {
+        if (checkPermissions(CAMERA_PERMISSION)) {
+            startActivity(new Intent(this, CoverByParentCameraActivity.class));
+        } else {
+            ActivityCompat.requestPermissions(this, CAMERA_PERMISSION, REQUEST_CODE_USING_CAMERA);
+        }
+    }
 
     public void usingCamera2(View view) {
         if (checkPermissions(CAMERA_PERMISSION)) {

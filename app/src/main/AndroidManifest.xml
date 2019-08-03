@@ -26,6 +26,9 @@
             android:name=".CameraActivity"
             android:launchMode="singleTask" />
         <activity
+            android:name=".CoverByParentCameraActivity"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".Camera2Activity"
             android:launchMode="singleTask" />
     </application>
