@@ -93,7 +93,6 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
         yArray = new byte[this.frameWidth * this.frameHeight];
         uArray = new byte[this.frameWidth * this.frameHeight / 4];
         vArray = new byte[this.frameWidth * this.frameHeight / 4];
-        Log.i(TAG, "init: " + rotateDegree);
 
         int yFrameSize = this.frameHeight * this.frameWidth;
         int uvFrameSize = yFrameSize >> 2;
@@ -152,7 +151,7 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     }
 
     /**
-     * 创建OpenGL Program并
+     * 创建OpenGL Program并关联GLSL中的变量
      */
     private void createGLProgram() {
         int programHandleMain = GLUtil.createShaderProgram();
