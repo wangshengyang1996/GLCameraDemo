@@ -134,7 +134,7 @@ public class CoverByParentCameraActivity extends BaseActivity implements ViewTre
                     else {
                         newHeight = textureViewLayoutParams.width * previewSize.width / previewSize.height;
                     }
-                    //当不是正方形预览的情况下，添加一层ViewGroup作为
+                    //当不是正方形预览的情况下，添加一层ViewGroup限制View的显示区域
                     if (newHeight != textureViewLayoutParams.height) {
                         insertFrameLayout = new RoundFrameLayout(CoverByParentCameraActivity.this);
                         int sideLength = Math.min(newWidth, newHeight);
