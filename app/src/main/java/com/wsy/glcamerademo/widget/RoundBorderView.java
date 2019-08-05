@@ -27,14 +27,6 @@ public class RoundBorderView extends View {
 
     public RoundBorderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                Rect rect = new Rect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-                outline.setRoundRect(rect, radius);
-            }
-        });
-        setClipToOutline(true);
     }
 
     @Override
