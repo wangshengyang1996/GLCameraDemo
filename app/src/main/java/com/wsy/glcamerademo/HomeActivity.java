@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -70,6 +71,8 @@ public class HomeActivity extends BaseActivity {
                 default:
                     break;
             }
+        }else {
+            Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
         }
     }
 }
