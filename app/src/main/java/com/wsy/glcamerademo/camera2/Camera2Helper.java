@@ -225,7 +225,6 @@ public class Camera2Helper {
         @Override
         public void onImageAvailable(ImageReader reader) {
             Image image = reader.acquireNextImage();
-            Log.i(TAG, "onImageAvailable: " + image.getWidth() + "x" + image.getHeight());
             //Y : U : V = 4 :2 :2
             if (camera2Listener != null && image.getFormat() == ImageFormat.YUV_420_888) {
                 Image.Plane[] planes = image.getPlanes();
@@ -240,7 +239,7 @@ public class Camera2Helper {
                 planes[0].getBuffer().get(y);
                 planes[1].getBuffer().get(u);
                 planes[2].getBuffer().get(v);
-                camera2Listener.onPreview(y, u, v, mPreviewSize, planes[0].getRowStride());
+                camera2Listener.onPreview(y, u, v, mPreviewSize, planes[0].getRowStride(),planes[1].getRowStride(),planes[2].getRowStride());
                 lock.unlock();
             }
             image.close();

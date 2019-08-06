@@ -161,7 +161,7 @@ public class Camera2Activity extends BaseActivity implements ViewTreeObserver.On
 
 
     @Override
-    public void onPreview(final byte[] y, final byte[] u, final byte[] v, final Size previewSize, final int stride) {
+    public void onPreview(final byte[] y, final byte[] u, final byte[] v, final Size previewSize, int yRowStride, int uRowStride, final int vRowStride) {
 
     }
 
