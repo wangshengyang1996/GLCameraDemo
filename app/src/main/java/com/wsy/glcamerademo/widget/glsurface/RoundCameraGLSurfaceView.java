@@ -82,6 +82,7 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
 
     /**
      * 设置不同的片段着色器代码以达到不同的预览效果
+     *
      * @param fragmentShaderCode 片段着色器代码
      */
     public void setFragmentShaderCode(String fragmentShaderCode) {
