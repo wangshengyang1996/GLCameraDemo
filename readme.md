@@ -11,7 +11,8 @@
 | ![TextureView + GLSurfaceView，1088x1088](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/PreviewSize_1088x1088.gif) | ![TextureView + GLSurfaceView，1920x1080](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/PreviewSize_1920x1080.gif) 
 |:-|:-|
 
-2019.8.10更新：
-添加滤镜，实现灰度效果预览和浮雕效果预览
+#### 2019.8.10 更新：
+添加滤镜，实现灰度效果预览和浮雕效果预览</br>
+
 | ![灰度效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/gray.gif) | ![浮雕效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/grave.gif) 
 |:-|:-|
