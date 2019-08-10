@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.wsy.glcamerademo.camera.CameraHelper;
 import com.wsy.glcamerademo.camera.CameraListener;
+import com.wsy.glcamerademo.widget.glsurface.GLUtil;
 import com.wsy.glcamerademo.widget.glsurface.RoundCameraGLSurfaceView;
 import com.wsy.glcamerademo.util.ImageUtil;
 import com.wsy.glcamerademo.widget.RoundBorderView;
@@ -67,6 +68,12 @@ public class GLCameraActivity extends BaseActivity implements ViewTreeObserver.O
     private void initView() {
         textureView = findViewById(R.id.texture_preview);
         roundCameraGLSurfaceView = findViewById(R.id.camera_gl_surface_view);
+        /**
+         * {@link GLUtil#FRAG_SHADER_NORMAL} 正常效果
+         * {@link GLUtil#FRAG_SHADER_GRAY} 灰度效果
+         * {@link GLUtil#FRAG_SHADER_GRAVE} 浮雕效果
+         */
+        roundCameraGLSurfaceView.setFragmentShaderCode(GLUtil.FRAG_SHADER_NORMAL);
         roundCameraGLSurfaceView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 

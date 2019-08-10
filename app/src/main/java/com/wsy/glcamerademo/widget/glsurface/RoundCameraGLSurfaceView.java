@@ -23,9 +23,9 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     private int frameWidth, frameHeight;
     private boolean isMirror;
     private int rotateDegree = 0;
-    //用于preview数据是否被传入，避免在初始化时有一段时间的绿色背景（y、u、v均全为0）
+    // 用于判断preview数据是否被传入，避免在初始化时有一段时间的绿色背景（y、u、v均全为0）
     private boolean dataInput = false;
-    //圆角半径
+    // 圆角半径
     private int radius = 0;
 
     private ByteBuffer yBuf = null, uBuf = null, vBuf = null;
@@ -39,6 +39,8 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     private byte[] vArray;
 
     private static final int FLOAT_SIZE_BYTES = 4;
+
+    private String fragmentShaderCode = GLUtil.FRAG_SHADER_NORMAL;
 
     private FloatBuffer squareVertices = null;
     private FloatBuffer coordVertices = null;
@@ -76,6 +78,14 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    /**
+     * 设置不同的片段着色器代码以达到不同的预览效果
+     * @param fragmentShaderCode 片段着色器代码
+     */
+    public void setFragmentShaderCode(String fragmentShaderCode) {
+        this.fragmentShaderCode = fragmentShaderCode;
     }
 
     public void init(boolean isMirror, int rotateDegree, int frameWidth, int frameHeight) {
@@ -152,9 +162,11 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
 
     /**
      * 创建OpenGL Program并关联GLSL中的变量
+     *
+     * @param fragmentShaderCode 片段着色器代码
      */
-    private void createGLProgram() {
-        int programHandleMain = GLUtil.createShaderProgram();
+    private void createGLProgram(String fragmentShaderCode) {
+        int programHandleMain = GLUtil.createShaderProgram(fragmentShaderCode);
         if (programHandleMain != -1) {
             // 使用着色器程序
             GLES20.glUseProgram(programHandleMain);
@@ -195,7 +207,7 @@ public class RoundCameraGLSurfaceView extends GLSurfaceView {
     public class YUVRenderer implements Renderer {
         private void initRenderer() {
             rendererReady = false;
-            createGLProgram();
+            createGLProgram(fragmentShaderCode);
 
             //启用纹理
             GLES20.glEnable(GLES20.GL_TEXTURE_2D);

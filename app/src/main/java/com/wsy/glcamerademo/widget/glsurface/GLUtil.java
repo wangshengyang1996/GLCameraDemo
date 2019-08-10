@@ -1,11 +1,10 @@
 package com.wsy.glcamerademo.widget.glsurface;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 import java.nio.IntBuffer;
 
-class GLUtil {
+public class GLUtil {
     private static final String TAG = "GLUtil";
 
     /**
@@ -21,9 +20,9 @@ class GLUtil {
                     "    }";
 
     /**
-     * 片段着色器
+     * 片段着色器，正常效果
      */
-    private static String FRAG_SHADER =
+    public static String FRAG_SHADER_NORMAL =
             "    varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
                     "    uniform sampler2D uSampler;\n" +
@@ -37,11 +36,48 @@ class GLUtil {
                     "        yuv.z = texture2D(vSampler, tc).r - 0.5;\n" +
                     "        gl_FragColor = vec4(convertMat * yuv, 1.0);\n" +
                     "    }";
+    /**
+     * 片段着色器，灰度效果
+     */
+    public static String FRAG_SHADER_GRAY =
+            "    varying vec2 tc;\n" +
+                    "    uniform sampler2D ySampler;\n" +
+                    "    uniform sampler2D uSampler;\n" +
+                    "    uniform sampler2D vSampler;\n" +
+                    "    const mat3 convertMat = mat3(1.0, 1.0, 1.0, 0, -0.344, 1.77, 1.403, -0.714,0);\n" +
+                    "    void main()\n" +
+                    "    {\n" +
+                    "        vec3 yuv;\n" +
+                    "        yuv.x = texture2D(ySampler, tc).r;\n" +
+                    "        gl_FragColor = vec4(vec3(yuv.x), 1.0);\n" +
+                    "    }";
+    /**
+     * 片段着色器，浮雕效果
+     */
+    public static String FRAG_SHADER_GRAVE =
+            "precision mediump float;\n" +
+                    "varying vec2 tc;\n" +
+                    "    uniform sampler2D ySampler;\n" +
+                    "    uniform sampler2D uSampler;\n" +
+                    "    uniform sampler2D vSampler;\n" +
+                    "    const vec2 texSize = vec2(100.0, 100.0);\n" +
+                    "    const vec4 graveColor = vec4(0.5, 0.5, 0.5, 1.0);\n" +
+                    "\n" +
+                    "void main()\n" +
+                    "{\n" +
+                    "    vec2 upLeftCoord = vec2(tc.x-1.0/texSize.x, tc.y-1.0/texSize.y);\n" +
+                    "    vec4 curColor = texture2D(ySampler, tc);\n" +
+                    "    vec4 upLeftColor = texture2D(ySampler, upLeftCoord);\n" +
+                    "    vec4 delColor = curColor - upLeftColor;\n" +
+                    "    gl_FragColor = vec4(vec3(delColor), 0.0) + graveColor;\n" +
+                    "}";
 
     //SQUARE_VERTICES每2个值作为一个顶点
     static final int COUNT_PER_SQUARE_VERTICE = 2;
     //COORD_VERTICES每2个值作为一个顶点
     static final int COUNT_PER_COORD_VERTICES = 2;
+
+
     /**
      * 显示的顶点
      */
@@ -188,11 +224,12 @@ class GLUtil {
     /**
      * 创建OpenGL Program，并链接
      *
+     * @param fragmentShaderCode 片段着色器代码
      * @return OpenGL Program对象的引用
      */
-    static int createShaderProgram() {
-        int vertexShader = GLUtil.loadShader(GLES20.GL_VERTEX_SHADER, GLUtil.VERTEX_SHADER);
-        int fragmentShader = GLUtil.loadShader(GLES20.GL_FRAGMENT_SHADER, GLUtil.FRAG_SHADER);
+    static int createShaderProgram(String fragmentShaderCode) {
+        int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
+        int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
         // 创建一个空的OpenGL ES Program
         int mProgram = GLES20.glCreateProgram();
