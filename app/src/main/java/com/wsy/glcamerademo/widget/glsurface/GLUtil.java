@@ -37,14 +37,11 @@ public class GLUtil {
                     "        gl_FragColor = vec4(convertMat * yuv, 1.0);\n" +
                     "    }";
     /**
-     * 片段着色器，灰度效果
+     * 片段着色器，灰度效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝Y分量即可，我这偷个懒没改）
      */
     public static String FRAG_SHADER_GRAY =
             "    varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
-                    "    uniform sampler2D uSampler;\n" +
-                    "    uniform sampler2D vSampler;\n" +
-                    "    const mat3 convertMat = mat3(1.0, 1.0, 1.0, 0, -0.344, 1.77, 1.403, -0.714,0);\n" +
                     "    void main()\n" +
                     "    {\n" +
                     "        vec3 yuv;\n" +
@@ -52,14 +49,12 @@ public class GLUtil {
                     "        gl_FragColor = vec4(vec3(yuv.x), 1.0);\n" +
                     "    }";
     /**
-     * 片段着色器，浮雕效果
+     * 片段着色器，浮雕效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝Y分量即可，我这偷个懒没改）
      */
     public static String FRAG_SHADER_GRAVE =
             "precision mediump float;\n" +
                     "varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
-                    "    uniform sampler2D uSampler;\n" +
-                    "    uniform sampler2D vSampler;\n" +
                     "    const vec2 texSize = vec2(100.0, 100.0);\n" +
                     "    const vec4 graveColor = vec4(0.5, 0.5, 0.5, 1.0);\n" +
                     "\n" +
