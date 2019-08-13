@@ -16,5 +16,5 @@
 #### 2019.8.10 更新：
 添加滤镜，实现灰度效果预览和浮雕效果预览（其实灰度和浮雕效果不需要 U V 数据，偷个懒没加判断）</br>
 
-| ![灰度效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/gray.gif) | ![浮雕效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/grave.gif) 
+| ![灰度效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/gray.gif) | ![浮雕效果](https://github.com/wangshengyang1996/GLCameraDemo/blob/master/sculpture.gif) 
 |:-|:-|

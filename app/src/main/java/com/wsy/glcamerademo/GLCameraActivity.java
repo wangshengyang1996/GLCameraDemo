@@ -71,9 +71,9 @@ public class GLCameraActivity extends BaseActivity implements ViewTreeObserver.O
         /**
          * {@link GLUtil#FRAG_SHADER_NORMAL} 正常效果
          * {@link GLUtil#FRAG_SHADER_GRAY} 灰度效果
-         * {@link GLUtil#FRAG_SHADER_GRAVE} 浮雕效果
+         * {@link GLUtil#FRAG_SHADER_SCULPTURE} 浮雕效果
          */
-        roundCameraGLSurfaceView.setFragmentShaderCode(GLUtil.FRAG_SHADER_NORMAL);
+        roundCameraGLSurfaceView.setFragmentShaderCode(GLUtil.FRAG_SHADER_SCULPTURE);
         roundCameraGLSurfaceView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 

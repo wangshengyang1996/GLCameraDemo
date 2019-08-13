@@ -37,7 +37,7 @@ public class GLUtil {
                     "        gl_FragColor = vec4(convertMat * yuv, 1.0);\n" +
                     "    }";
     /**
-     * 片段着色器，灰度效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝Y分量即可，我这偷个懒没改）
+     * 片段着色器，灰度效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝NV21数据中的Y分量即可）
      */
     public static String FRAG_SHADER_GRAY =
             "    varying vec2 tc;\n" +
@@ -49,14 +49,14 @@ public class GLUtil {
                     "        gl_FragColor = vec4(vec3(yuv.x), 1.0);\n" +
                     "    }";
     /**
-     * 片段着色器，浮雕效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝Y分量即可，我这偷个懒没改）
+     * 片段着色器，浮雕效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝NV21数据中的Y分量即可）
      */
-    public static String FRAG_SHADER_GRAVE =
+    public static String FRAG_SHADER_SCULPTURE =
             "precision mediump float;\n" +
                     "varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
                     "    const vec2 texSize = vec2(100.0, 100.0);\n" +
-                    "    const vec4 graveColor = vec4(0.5, 0.5, 0.5, 1.0);\n" +
+                    "    const vec4 sculptureColor = vec4(0.5, 0.5, 0.5, 1.0);\n" +
                     "\n" +
                     "void main()\n" +
                     "{\n" +
@@ -64,7 +64,7 @@ public class GLUtil {
                     "    vec4 curColor = texture2D(ySampler, tc);\n" +
                     "    vec4 upLeftColor = texture2D(ySampler, upLeftCoord);\n" +
                     "    vec4 delColor = curColor - upLeftColor;\n" +
-                    "    gl_FragColor = vec4(vec3(delColor), 0.0) + graveColor;\n" +
+                    "    gl_FragColor = vec4(vec3(delColor), 0.0) + sculptureColor;\n" +
                     "}";
 
     //SQUARE_VERTICES每2个值作为一个顶点
