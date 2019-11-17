@@ -38,7 +38,7 @@ public class GLCameraActivity extends BaseActivity implements ViewTreeObserver.O
     private SeekBar radiusSeekBar;
 
     //默认打开的CAMERA
-    private static final int CAMERA_ID = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private static final int CAMERA_ID = Camera.CameraInfo.CAMERA_FACING_FRONT;
     //需要的权限
     private static final String[] NEEDED_PERMISSIONS = new String[]{
             Manifest.permission.CAMERA

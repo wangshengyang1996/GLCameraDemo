@@ -23,6 +23,7 @@ public class GLUtil {
      * 片段着色器，正常效果
      */
     public static String FRAG_SHADER_NORMAL =
+            "precision mediump float;\n" +
             "    varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
                     "    uniform sampler2D uSampler;\n" +
@@ -40,6 +41,7 @@ public class GLUtil {
      * 片段着色器，灰度效果。不需要 U V 数据（Java代码中可以做对应修改，仅需拷贝NV21数据中的Y分量即可）
      */
     public static String FRAG_SHADER_GRAY =
+            "precision mediump float;\n" +
             "    varying vec2 tc;\n" +
                     "    uniform sampler2D ySampler;\n" +
                     "    void main()\n" +
